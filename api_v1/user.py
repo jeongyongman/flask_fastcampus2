@@ -27,4 +27,5 @@ def users():
 
         return jsonify(), 201
 
-    return jsonify()
+    users = Fcuser.query.all()
+    return jsonify([user.serialize for user in users])
