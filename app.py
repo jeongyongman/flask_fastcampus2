@@ -11,6 +11,10 @@ app.register_blueprint(api_v1, url_prefix='/api/v1')
 def register():
     return render_template('register.html')
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 @app.route('/')
 def hello():
     return '<h1>Hello World!</h1>'
