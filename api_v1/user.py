@@ -1,9 +1,11 @@
 from flask import jsonify
 from flask import request
+from flask_jwt import jwt_required
 from models import Fcuser, db
 from . import api
 
 @api.route('/users', methods=['GET','POST'])
+@jwt_required()
 def users():
     if request.method == 'POST':
         data = request.get_json()
@@ -42,19 +44,6 @@ def user_detail(uid):
 
     data = request.get_json()
 
-    # userid = data.get('userid')
-    # username = data.get('username')
-    # password = data.get('password')
-
-    # updated_data = {}
-    # if userid:
-    #     updated_data['userid'] = userid
-    # if username:
-    #     updated_data['username'] = username
-    # if password:
-    #     updated_data['password'] = password
-
-    # Fcuser.query.filter(Fcuser.id == uid).update(updated_data)
     Fcuser.query.filter(Fcuser.id == uid).update(data)
     user = Fcuser.query.filter(Fcuser.id == uid).first()
     return jsonify(user.serialize)
